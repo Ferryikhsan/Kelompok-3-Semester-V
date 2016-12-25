@@ -17,12 +17,13 @@ class CreateMahasiswa extends Migration
             $table->increments('id');
             $table->string('nim');
             $table->string('nama');
-            $table->string('prodi');
             $table->string('judul_laporan');
             $table->string('judul_ki');
             $table->string('tahun');
             
+            $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
