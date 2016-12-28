@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Auth;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
+
 
 class RegisterController extends Controller
 {
@@ -27,7 +29,8 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    
+
 
     /**
      * Create a new controller instance.
@@ -49,8 +52,10 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
+            'username' => 'required|unique:users',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'jabatan' => 'required',
         ]);
     }
 
@@ -64,8 +69,19 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'username' => $data['username'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'jabatan' => $data['jabatan'],
         ]);
     }
+
+    public function redirectPath()
+    {
+        if(Auth::user()->jabatan == "ADMIN")
+            return "/admin";
+        else
+            return "/user";
+    }
+    
 }

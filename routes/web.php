@@ -17,5 +17,9 @@ Route::get('/himaMI', function () {
     return view('Tampilan');
 });
 
+/* Route PLP*/
+Route::get('/plp', 'PLPController@plp');
+Route::get('/cariplps', 'DosenController@search');
+
 
 
